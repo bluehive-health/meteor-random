@@ -1,0 +1,22 @@
+# Source files (already excluded by files array, but being explicit)
+src/
+examples/
+coverage/
+
+# Development files
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+jest.config.js
+eslint.config.js
+tsconfig.json
+
+# CI/CD files
+.github/
+.eslintignore
+.eslintrc.json
+
+# Other
+node_modules/
+coverage_output.txt
