@@ -8,7 +8,7 @@ import { createAleaGeneratorWithGeneratedSeed } from './create-alea-generator';
 export function createRandom(generator: RandomGenerator): RandomGenerator {
   // Create a non-cryptographically secure PRNG with a given seed (using
   // the Alea algorithm)
-  generator.createWithSeeds = (...seeds: any[]): RandomGenerator => {
+  generator.createWithSeeds = (...seeds: unknown[]): RandomGenerator => {
     if (seeds.length === 0) {
       throw new Error('No seeds were provided');
     }

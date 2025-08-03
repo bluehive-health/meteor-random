@@ -13,15 +13,15 @@ interface AleaFunction {
   uint32(): number;
   fract53(): number;
   version: string;
-  args: any[];
+  args: unknown[];
 }
 
-function createAlea(seeds: any[]): AleaFunction {
-  function Mash() {
+function createAlea(seeds: unknown[]): AleaFunction {
+  function Mash(): (data: unknown) => number {
     let n = 0xefc8249d;
 
-    const mash = (data: any): number => {
-      const dataStr = data.toString();
+    const mash = (data: unknown): number => {
+      const dataStr = String(data);
       for (let i = 0; i < dataStr.length; i++) {
         n += dataStr.charCodeAt(i);
         let h = 0.02519603282416938 * n;
@@ -74,18 +74,19 @@ function createAlea(seeds: any[]): AleaFunction {
     return s2 = t - (c = t | 0);
   };
 
-  (random as any).uint32 = (): number => random() * 0x100000000; // 2^32
-  (random as any).fract53 = (): number => random() +
+  const aleaFunction = random as AleaFunction;
+  aleaFunction.uint32 = (): number => random() * 0x100000000; // 2^32
+  aleaFunction.fract53 = (): number => random() +
         ((random() * 0x200000 | 0) * 1.1102230246251565e-16); // 2^-53
 
-  (random as any).version = 'Alea 0.9';
-  (random as any).args = seeds;
+  aleaFunction.version = 'Alea 0.9';
+  aleaFunction.args = seeds;
   
-  return random as AleaFunction;
+  return aleaFunction;
 }
 
 export interface AleaGeneratorOptions {
-  seeds?: any[];
+  seeds?: unknown[];
 }
 
 /**

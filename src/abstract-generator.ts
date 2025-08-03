@@ -49,7 +49,7 @@ export interface RandomGenerator {
   /**
    * Create a non-cryptographically secure PRNG with given seeds (using the Alea algorithm)
    */
-  createWithSeeds(...seeds: any[]): RandomGenerator;
+  createWithSeeds(...seeds: unknown[]): RandomGenerator;
 
   /**
    * A non-cryptographically secure but fast random generator
@@ -128,7 +128,7 @@ export abstract class AbstractRandomGenerator implements RandomGenerator {
   /**
    * Create a non-cryptographically secure PRNG with given seeds (using the Alea algorithm)
    */
-  createWithSeeds(...seeds: any[]): RandomGenerator {
+  createWithSeeds(...seeds: unknown[]): RandomGenerator {
     if (seeds.length === 0) {
       throw new Error('No seeds were provided');
     }

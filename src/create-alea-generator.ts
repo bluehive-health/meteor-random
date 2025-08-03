@@ -7,7 +7,7 @@ import { AleaRandomGenerator } from './alea-generator';
  */
 
 // Client-side entropy sources
-function getClientEntropy(): any[] {
+function getClientEntropy(): unknown[] {
   const height = (typeof window !== 'undefined' && window.innerHeight) ||
         (typeof document !== 'undefined' &&
          document.documentElement &&

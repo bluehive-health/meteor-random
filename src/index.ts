@@ -22,9 +22,9 @@ import { createRandom } from './create-random';
 // Environment detection
 function isNode(): boolean {
   return typeof globalThis !== 'undefined' && 
-         typeof (globalThis as any).process !== 'undefined' && 
-         (globalThis as any).process.versions && 
-         (globalThis as any).process.versions.node;
+         typeof (globalThis as Record<string, unknown>).process !== 'undefined' && 
+         Boolean((globalThis as Record<string, unknown>).process) && 
+         typeof (globalThis as Record<string, unknown>).process === 'object';
 }
 
 function isBrowser(): boolean {
@@ -40,14 +40,14 @@ function createGenerator(): RandomGenerator {
   if (isNode()) {
     try {
       return new NodeRandomGenerator();
-    } catch (e) {
+    } catch {
       // Fall back to Alea if Node crypto is not available
       return createAleaGeneratorWithGeneratedSeed();
     }
   } else if (isBrowser()) {
     try {
       return new BrowserRandomGenerator();
-    } catch (e) {
+    } catch {
       // Fall back to Alea if browser crypto is not available
       return createAleaGeneratorWithGeneratedSeed();
     }

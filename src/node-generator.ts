@@ -5,14 +5,14 @@ import { AbstractRandomGenerator } from './abstract-generator';
  * This provides cryptographically strong randomness on the server
  */
 export class NodeRandomGenerator extends AbstractRandomGenerator {
-  private crypto: any;
+  private crypto: typeof import('crypto');
 
   constructor() {
     super();
     // Dynamically import crypto to avoid issues in browser environments
     try {
       this.crypto = require('crypto');
-    } catch (e) {
+    } catch {
       throw new Error('Node.js crypto module is not available');
     }
   }
@@ -32,19 +32,19 @@ export class NodeRandomGenerator extends AbstractRandomGenerator {
    */
   hexString(digits: number): string {
     const numBytes = Math.ceil(digits / 2);
-    let bytes: any;
+    let bytes: Buffer;
     
     // Try to get cryptographically strong randomness. Fall back to
     // non-cryptographically strong if not available.
     try {
       bytes = this.crypto.randomBytes(numBytes);
-    } catch (e) {
+    } catch {
       // XXX should re-throw any error except insufficient entropy
       // Note: crypto.pseudoRandomBytes was deprecated in Node.js, 
       // so we'll use randomBytes with a fallback to Math.random
       try {
         bytes = this.crypto.randomBytes(numBytes);
-      } catch (fallbackError) {
+      } catch {
         // Ultimate fallback using Math.random (not cryptographically secure)
         const result = Array.from({ length: digits }, () => 
           Math.floor(Math.random() * 16).toString(16)
