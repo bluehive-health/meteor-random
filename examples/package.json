@@ -1,0 +1,34 @@
+{
+  "name": "@bluehive-health/random-examples",
+  "version": "1.0.0",
+  "description": "Interactive examples for @bluehive-health/random library",
+  "private": true,
+  "scripts": {
+    "serve": "npx serve .",
+    "start": "npx serve . -l 3000",
+    "node-example": "node node-example.js",
+    "typescript-example": "npx tsc typescript-example.ts --target es2020 --module commonjs && node typescript-example.js",
+    "dev": "npx serve . -l 3000 --cors",
+    "build-ts": "npx tsc typescript-example.ts --target es2020 --module commonjs",
+    "clean": "rm -f *.js.map typescript-example.js"
+  },
+  "keywords": [
+    "random",
+    "examples",
+    "crypto",
+    "secure",
+    "demo"
+  ],
+  "author": "BlueHive Health",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@bluehive-health/random": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

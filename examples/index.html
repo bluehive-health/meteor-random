@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@bluehive-health/random - Interactive Examples</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blue-primary': '#1e40af',
+                        'blue-secondary': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .code-output {
+            background: #1f2937;
+            color: #f9fafb;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        .syntax-highlight .string { color: #10b981; }
+        .syntax-highlight .number { color: #f59e0b; }
+        .syntax-highlight .keyword { color: #8b5cf6; }
+        .syntax-highlight .comment { color: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white">
+        <div class="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold sm:text-5xl lg:text-6xl">
+                    @bluehive-health/<span class="text-yellow-300">random</span>
+                </h1>
+                <p class="mt-6 text-xl sm:text-2xl text-gray-200 max-w-3xl mx-auto">
+                    Cryptographically strong random number generation for Node.js and browsers. Ported from Meteor's <a href="https://docs.meteor.com/packages/random.html#random" target="_blank" class="text-blue-300 hover:underline">Random package</a> for full compatibility with modern JavaScript applications.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <div class="bg-black/20 backdrop-blur rounded-lg px-4 py-2 text-sm">
+                        <span class="text-gray-300">npm install</span> <span class="text-yellow-300">@bluehive-health/random</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-8 overflow-x-auto py-4">
+                <a href="#installation" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Installation</a>
+                <a href="#basic-usage" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Basic Usage</a>
+                <a href="#functions" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Functions</a>
+                <a href="#advanced" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Advanced</a>
+                <a href="#playground" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Playground</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <!-- Installation Section -->
+        <section id="installation" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Installation</h2>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Package Manager</h3>
+                        <div class="space-y-3">
+                            <div class="bg-gray-100 rounded-lg p-3">
+                                <code class="text-sm">npm install @bluehive-health/random</code>
+                            </div>
+                            <div class="bg-gray-100 rounded-lg p-3">
+                                <code class="text-sm">yarn add @bluehive-health/random</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Browser CDN</h3>
+                        <div class="bg-gray-100 rounded-lg p-3">
+                            <code class="text-sm break-all">
+                                &lt;script src="https://unpkg.com/@bluehive-health/random/dist/index.js"&gt;&lt;/script&gt;
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Basic Usage Section -->
+        <section id="basic-usage" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Basic Usage</h2>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Import the Library</h3>
+                        <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="keyword">import</span> { <span class="string">Random</span> } <span class="keyword">from</span> <span class="string">'@bluehive-health/random'</span>;
+
+<span class="comment">// Or using CommonJS</span>
+<span class="keyword">const</span> { Random } = <span class="keyword">require</span>(<span class="string">'@bluehive-health/random'</span>);</code></pre>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Key Features</h3>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                                Cryptographically strong randomness
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                                Cross-platform (Node.js & Browser)
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                                TypeScript support
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                                Zero dependencies
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Functions Section -->
+        <section id="functions" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Available Functions</h2>
+            <div class="grid gap-6">
+                
+                <!-- Random.id() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.id()</h3>
+                            <p class="text-gray-600 mb-4">Generate a unique identifier that's likely to be unique in the whole world.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Default length: 17 characters</span>
+<span class="keyword">const</span> id = Random.<span class="string">id</span>();
+<span class="comment">// → "Jjwjg6gouWLXhMGKW"</span>
+
+<span class="comment">// Custom length</span>
+<span class="keyword">const</span> shortId = Random.<span class="string">id</span>(<span class="number">10</span>);
+<span class="comment">// → "3kRtz8fGd2"</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it out:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateId()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate ID
+                                </button>
+                                <button onclick="generateCustomId()" class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate ID (length: 10)
+                                </button>
+                                <div id="id-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center">
+                                    <span class="text-gray-500 text-sm">Click a button to generate an ID</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Random.secret() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.secret()</h3>
+                            <p class="text-gray-600 mb-4">Generate a cryptographically secure secret with 6 bits of entropy per character.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Default length: 43 characters (256 bits)</span>
+<span class="keyword">const</span> secret = Random.<span class="string">secret</span>();
+<span class="comment">// → "dWx8fQ_kNZ4mK3oT9qZ..."</span>
+
+<span class="comment">// Custom length</span>
+<span class="keyword">const</span> shortSecret = Random.<span class="string">secret</span>(<span class="number">20</span>);
+<span class="comment">// → "mK3oT9qZdWx8fQ_kNZ4m"</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it out:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateSecret()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate Secret
+                                </button>
+                                <button onclick="generateCustomSecret()" class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate Secret (length: 20)
+                                </button>
+                                <div id="secret-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center break-all">
+                                    <span class="text-gray-500 text-sm">Click a button to generate a secret</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Random.fraction() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.fraction()</h3>
+                            <p class="text-gray-600 mb-4">Generate a random number between 0 and 1, like Math.random() but cryptographically secure.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="keyword">const</span> fraction = Random.<span class="string">fraction</span>();
+<span class="comment">// → 0.7851294...</span>
+
+<span class="comment">// Use for custom ranges</span>
+<span class="keyword">const</span> range = Random.<span class="string">fraction</span>() * <span class="number">100</span>;
+<span class="comment">// → 78.51294... (0-100)</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it out:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateFraction()" class="w-full bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate Fraction (0-1)
+                                </button>
+                                <button onclick="generateRange()" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate Number (1-100)
+                                </button>
+                                <div id="fraction-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center">
+                                    <span class="text-gray-500 text-sm">Click a button to generate a number</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Random.hexString() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.hexString()</h3>
+                            <p class="text-gray-600 mb-4">Generate a random string of hexadecimal digits.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Generate 8 hex digits</span>
+<span class="keyword">const</span> hex = Random.<span class="string">hexString</span>(<span class="number">8</span>);
+<span class="comment">// → "a1b2c3d4"</span>
+
+<span class="comment">// Generate 16 hex digits</span>
+<span class="keyword">const</span> longHex = Random.<span class="string">hexString</span>(<span class="number">16</span>);
+<span class="comment">// → "a1b2c3d4e5f6a7b8"</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it out:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateHex8()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate Hex (8 digits)
+                                </button>
+                                <button onclick="generateHex16()" class="w-full bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate Hex (16 digits)
+                                </button>
+                                <div id="hex-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center font-mono">
+                                    <span class="text-gray-500 text-sm">Click a button to generate hex</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Random.choice() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.choice()</h3>
+                            <p class="text-gray-600 mb-4">Randomly select an element from an array or string.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Choose from array</span>
+<span class="keyword">const</span> colors = [<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>];
+<span class="keyword">const</span> color = Random.<span class="string">choice</span>(colors);
+<span class="comment">// → "green"</span>
+
+<span class="comment">// Choose from string</span>
+<span class="keyword">const</span> char = Random.<span class="string">choice</span>(<span class="string">'ABCDEF'</span>);
+<span class="comment">// → "C"</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it out:</h4>
+                            <div class="space-y-3">
+                                <button onclick="chooseColor()" class="w-full bg-gradient-to-r from-red-500 to-blue-500 hover:from-red-600 hover:to-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all">
+                                    Choose Random Color
+                                </button>
+                                <button onclick="chooseEmoji()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Choose Random Emoji
+                                </button>
+                                <div id="choice-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center">
+                                    <span class="text-gray-500 text-sm">Click a button to make a choice</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Usage Section -->
+        <section id="advanced" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Advanced Usage</h2>
+            <div class="grid gap-6">
+                
+                <!-- Seeded Random -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Seeded Random Generation</h3>
+                    <p class="text-gray-600 mb-4">Create deterministic random generators for testing and reproducible results.</p>
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Create seeded generator</span>
+<span class="keyword">const</span> seeded = Random.<span class="string">createWithSeeds</span>(<span class="string">'seed1'</span>, <span class="string">'seed2'</span>);
+
+<span class="comment">// Always produces same sequence</span>
+<span class="keyword">const</span> id1 = seeded.<span class="string">id</span>();
+<span class="keyword">const</span> id2 = seeded.<span class="string">id</span>();
+
+<span class="comment">// Create another with same seeds</span>
+<span class="keyword">const</span> seeded2 = Random.<span class="string">createWithSeeds</span>(<span class="string">'seed1'</span>, <span class="string">'seed2'</span>);
+<span class="comment">// seeded2.id() === id1 (same sequence)</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Demo:</h4>
+                            <div class="space-y-3">
+                                <button onclick="demonstrateSeeded()" class="w-full bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate Seeded Sequence
+                                </button>
+                                <div id="seeded-output" class="bg-gray-100 rounded-lg p-3 min-h-[4rem] text-sm">
+                                    <span class="text-gray-500">Click to see deterministic generation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insecure but Fast -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Fast Non-Cryptographic Generation</h3>
+                    <p class="text-gray-600 mb-4">Use the insecure generator for better performance when cryptographic security isn't required.</p>
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Use insecure but fast generator</span>
+<span class="keyword">const</span> fastId = Random.insecure.<span class="string">id</span>();
+<span class="keyword">const</span> fastSecret = Random.insecure.<span class="string">secret</span>(<span class="number">10</span>);
+<span class="keyword">const</span> fastNumber = Random.insecure.<span class="string">fraction</span>();
+
+<span class="comment">// Good for simulations, games, etc.</span>
+<span class="comment">// NOT suitable for security purposes</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Performance Test:</h4>
+                            <div class="space-y-3">
+                                <button onclick="performanceTest()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Compare Performance
+                                </button>
+                                <div id="performance-output" class="bg-gray-100 rounded-lg p-3 min-h-[4rem] text-sm">
+                                    <span class="text-gray-500">Click to run performance comparison</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Playground -->
+        <section id="playground" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Interactive Playground</h2>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Custom Function Builder</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Function</label>
+                                <select id="function-select" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="id">Random.id()</option>
+                                    <option value="secret">Random.secret()</option>
+                                    <option value="hexString">Random.hexString()</option>
+                                    <option value="fraction">Random.fraction()</option>
+                                </select>
+                            </div>
+                            <div id="parameter-section">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Length/Digits</label>
+                                <input type="number" id="length-input" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="17" min="1" max="100">
+                            </div>
+                            <button onclick="executeCustomFunction()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all">
+                                Execute Function
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Output & Code</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Generated Code:</label>
+                                <pre id="generated-code" class="code-output rounded-lg p-3 text-sm overflow-x-auto min-h-[3rem]">Random.id(17)</pre>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Result:</label>
+                                <div id="custom-output" class="bg-gray-100 rounded-lg p-3 min-h-[3rem] flex items-center break-all font-mono">
+                                    <span class="text-gray-500 text-sm">Click execute to see result</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">@bluehive-health/random</h3>
+                    <p class="text-gray-400 text-sm">
+                        Cryptographically strong random number generation for modern JavaScript applications.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://github.com/bluehive-health/meteor-random" class="text-gray-400 hover:text-white transition-colors">GitHub Repository</a></li>
+                        <li><a href="https://www.npmjs.com/package/@bluehive-health/random" class="text-gray-400 hover:text-white transition-colors">NPM Package</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Features</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>✓ Cryptographically secure</li>
+                        <li>✓ Cross-platform support</li>
+                        <li>✓ TypeScript ready</li>
+                        <li>✓ Zero dependencies</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 <a href="https://bluehive.com/?utm_source=meteor-random&utm_medium=footer&utm_campaign=random" target="_blank" class="text-blue-300 hover:underline">BlueHive Health</a>. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include the random library -->
+    <script src="./random-standalone.js"></script>
+    <script src="./examples.js"></script>
+</body>
+</html>
