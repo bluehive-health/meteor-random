@@ -1,4 +1,4 @@
-# @bluehive-health/random
+# @bluehive/random
 
 A TypeScript npm package for generating random numbers with cryptographically strong PRNGs. This is a port of the Meteor.js `random` package with full TypeScript support, comprehensive unit testing, and modern npm packaging.
 
@@ -18,7 +18,7 @@ A TypeScript npm package for generating random numbers with cryptographically st
 ## Installation
 
 ```bash
-npm install @bluehive-health/random
+npm install @bluehive/random
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ npm install @bluehive-health/random
 ### Basic Usage
 
 ```typescript
-import { Random } from '@bluehive-health/random';
+import { Random } from '@bluehive/random';
 
 // Generate a unique identifier (default length: 17)
 const id = Random.id(); // "Jjwjg6gouWLXhMGKW"
@@ -59,7 +59,7 @@ const char = Random.choice('abcdef'); // "c"
 For testing or when you need reproducible sequences:
 
 ```typescript
-import { Random } from '@bluehive-health/random';
+import { Random } from '@bluehive/random';
 
 // Create a seeded generator for reproducible results
 const seededRandom = Random.createWithSeeds(42);
@@ -77,7 +77,7 @@ const multiSeeded = Random.createWithSeeds('test', 123, 'more-entropy');
 When you need speed over security:
 
 ```typescript
-import { Random } from '@bluehive-health/random';
+import { Random } from '@bluehive/random';
 
 // Use the fast, non-cryptographic generator
 const fastId = Random.insecure.id();
@@ -94,7 +94,7 @@ import {
   NodeRandomGenerator, 
   BrowserRandomGenerator, 
   AleaRandomGenerator 
-} from '@bluehive-health/random';
+} from '@bluehive/random';
 
 // Force Node.js crypto (server-side only)
 const nodeGen = new NodeRandomGenerator();
@@ -192,7 +192,7 @@ This package maintains API compatibility with Meteor's `random` package:
 import { Random } from 'meteor/random';
 
 // Equivalent with this package
-import { Random } from '@bluehive-health/random';
+import { Random } from '@bluehive/random';
 
 // All the same methods work identically
 const id = Random.id();
@@ -216,8 +216,8 @@ MIT License. See [LICENSE](LICENSE) file for details.
 
 If you're migrating from Meteor's `random` package:
 
-1. Install this package: `npm install @bluehive-health/random`
-2. Replace imports: `import { Random } from 'meteor/random'` → `import { Random } from '@bluehive-health/random'`
+1. Install this package: `npm install @bluehive/random`
+2. Replace imports: `import { Random } from 'meteor/random'` → `import { Random } from '@bluehive/random'`
 3. All existing code should work without changes
 
 ## Development

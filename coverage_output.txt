@@ -1,5 +1,5 @@
 
-> @bluehive-health/random@1.0.0 test:coverage
+> @bluehive/random@1.0.0 test:coverage
 > jest --coverage
 
 FAIL src/__tests__/final-push-100.test.ts

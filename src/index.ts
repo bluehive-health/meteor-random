@@ -1,5 +1,5 @@
 /**
- * @bluehive-health/random
+ * @bluehive/random
  * 
  * Random number generator and utilities with cryptographically strong PRNGs
  * 

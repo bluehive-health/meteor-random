@@ -1,6 +1,6 @@
-# @bluehive-health/random - Examples
+# @bluehive/random - Examples
 
-This directory contains comprehensive examples demonstrating how to use the `@bluehive-health/random` library in various environments and scenarios.
+This directory contains comprehensive examples demonstrating how to use the `@bluehive/random` library in various environments and scenarios.
 
 ## 📁 Files Overview
 
@@ -70,7 +70,7 @@ Demonstrates:
 The `React-example.jsx` shows how to integrate the library with React:
 
 ```jsx
-import { Random } from '@bluehive-health/random';
+import { Random } from '@bluehive/random';
 
 function useRandom() {
   return {
@@ -86,16 +86,16 @@ function useRandom() {
 Before running the examples with the actual library:
 
 ```bash
-npm install @bluehive-health/random
+npm install @bluehive/random
 ```
 
 Then replace the mock implementations in the examples with actual imports:
 
 ```javascript
 // Replace mock with actual import
-import { Random } from '@bluehive-health/random';
+import { Random } from '@bluehive/random';
 // or
-const { Random } = require('@bluehive-health/random');
+const { Random } = require('@bluehive/random');
 ```
 
 ## 📚 Key Examples by Use Case
@@ -208,9 +208,9 @@ The library works in all modern browsers and automatically:
 
 ## 🔗 Links
 
-- [NPM Package](https://www.npmjs.com/package/@bluehive-health/random)
+- [NPM Package](https://www.npmjs.com/package/@bluehive/random)
 - [GitHub Repository](https://github.com/bluehive-health/meteor-random)
-- [TypeScript Definitions](https://www.npmjs.com/package/@bluehive-health/random?activeTab=code)
+- [TypeScript Definitions](https://www.npmjs.com/package/@bluehive/random?activeTab=code)
 
 ## 📝 License
 

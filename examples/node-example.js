@@ -1,7 +1,7 @@
-// node-example.js - Example usage of @bluehive-health/random in Node.js
+// node-example.js - Example usage of @bluehive/random in Node.js
 
 // Import the library (assuming it's installed via npm)
-// const { Random } = require('@bluehive-health/random');
+// const { Random } = require('@bluehive/random');
 
 // For this example, we'll use a local import since we're in the examples directory
 // In a real project, you would use the npm package
@@ -10,16 +10,16 @@ const fs = require('fs');
 
 // Simple demonstration without actual library import
 console.log('='.repeat(60));
-console.log('🎲 @bluehive-health/random - Node.js Example');
+console.log('🎲 @bluehive/random - Node.js Example');
 console.log('='.repeat(60));
 
 console.log('\n📦 Installation:');
-console.log('npm install @bluehive-health/random');
+console.log('npm install @bluehive/random');
 
 console.log('\n📝 Import:');
-console.log("const { Random } = require('@bluehive-health/random');");
+console.log("const { Random } = require('@bluehive/random');");
 console.log("// or");
-console.log("import { Random } from '@bluehive-health/random';");
+console.log("import { Random } from '@bluehive/random';");
 
 console.log('\n🔧 Basic Usage Examples:');
 
@@ -120,5 +120,5 @@ console.log('   ✓ Always prefer secure generation for passwords, tokens, and s
 console.log('   ⚠ Use insecure mode only for non-security-critical operations');
 
 console.log('\n' + '='.repeat(60));
-console.log('🎉 Ready to use @bluehive-health/random in your Node.js app!');
+console.log('🎉 Ready to use @bluehive/random in your Node.js app!');
 console.log('='.repeat(60));

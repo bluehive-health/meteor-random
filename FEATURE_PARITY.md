@@ -1,10 +1,10 @@
 # Feature Parity Comparison
 
-This document compares the original Meteor `random` package with the new TypeScript npm version `@bluehive-health/random`.
+This document compares the original Meteor `random` package with the new TypeScript npm version `@bluehive/random`.
 
 ## API Compatibility ✅
 
-| Feature | Meteor `random` | `@bluehive-health/random` | Status |
+| Feature | Meteor `random` | `@bluehive/random` | Status |
 |---------|-----------------|---------------------------|---------|
 | `Random.id()` | ✅ | ✅ | ✅ Full compatibility |
 | `Random.id(n)` | ✅ | ✅ | ✅ Full compatibility |
@@ -31,7 +31,7 @@ Random.createWithSeeds(0).id() // "6QTjB8C5SEqhmz4ni"
 
 ## Environment Support ✅
 
-| Environment | Meteor `random` | `@bluehive-health/random` | Status |
+| Environment | Meteor `random` | `@bluehive/random` | Status |
 |-------------|-----------------|---------------------------|---------|
 | Node.js | crypto.randomBytes | crypto.randomBytes | ✅ Same implementation |
 | Modern Browsers | window.crypto.getRandomValues | window.crypto.getRandomValues | ✅ Same implementation |
@@ -66,7 +66,7 @@ Migration is seamless:
 import { Random } from 'meteor/random';
 
 // After (npm package)
-import { Random } from '@bluehive-health/random';
+import { Random } from '@bluehive/random';
 
 // All existing code works identically
 const id = Random.id();

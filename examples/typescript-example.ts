@@ -1,7 +1,7 @@
 // typescript-example.ts - TypeScript example showing type-safe usage
 
 // Import with full TypeScript support
-// import { Random, RandomGenerator } from '@bluehive-health/random';
+// import { Random, RandomGenerator } from '@bluehive/random';
 
 // Mock types and implementation for demonstration
 interface RandomGenerator {
@@ -59,7 +59,7 @@ Random.insecure = {
 
 // ===== TYPE-SAFE EXAMPLES =====
 
-console.log('🔷 TypeScript Examples with @bluehive-health/random');
+console.log('🔷 TypeScript Examples with @bluehive/random');
 console.log('=' .repeat(50));
 
 // 1. Type-safe ID generation

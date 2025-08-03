@@ -1,6 +1,6 @@
-// React-example.jsx - Example React component using @bluehive-health/random
+// React-example.jsx - Example React component using @bluehive/random
 import React, { useState, useEffect } from 'react';
-// import { Random } from '@bluehive-health/random';
+// import { Random } from '@bluehive/random';
 
 // Mock Random for demonstration
 const Random = {
@@ -241,7 +241,7 @@ function RandomExampleApp() {
       <div className="max-w-6xl mx-auto px-4">
         <header className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            @bluehive-health/random + React
+            @bluehive/random + React
           </h1>
           <p className="text-gray-600">
             Interactive examples showing how to integrate cryptographically secure random generation in React apps
@@ -257,7 +257,7 @@ function RandomExampleApp() {
         
         <footer className="mt-12 text-center text-gray-500 text-sm">
           <p>
-            Install: <code className="bg-gray-200 px-2 py-1 rounded">npm install @bluehive-health/random</code>
+            Install: <code className="bg-gray-200 px-2 py-1 rounded">npm install @bluehive/random</code>
           </p>
         </footer>
       </div>

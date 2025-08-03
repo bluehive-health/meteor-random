@@ -1,4 +1,4 @@
-// random-standalone.js - Standalone version of @bluehive-health/random for browser examples
+// random-standalone.js - Standalone version of @bluehive/random for browser examples
 // This is a simplified implementation for demonstration purposes
 
 (function(global) {

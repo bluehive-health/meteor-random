@@ -1,5 +1,5 @@
 /**
- * Example usage of @bluehive-health/random
+ * Example usage of @bluehive/random
  * 
  * This file demonstrates how to use the random number generator in various scenarios.
  */

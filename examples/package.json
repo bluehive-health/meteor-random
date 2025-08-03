@@ -1,7 +1,7 @@
 {
-  "name": "@bluehive-health/random-examples",
+  "name": "@bluehive/random-examples",
   "version": "1.0.0",
-  "description": "Interactive examples for @bluehive-health/random library",
+  "description": "Interactive examples for @bluehive/random library",
   "private": true,
   "scripts": {
     "serve": "npx serve .",
@@ -26,7 +26,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@bluehive-health/random": "^1.0.0"
+    "@bluehive/random": "^1.0.0"
   },
   "engines": {
     "node": ">=14.0.0"
