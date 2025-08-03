@@ -1,0 +1,133 @@
+
+> @bluehive-health/random@1.0.0 test:coverage
+> jest --coverage
+
+FAIL src/__tests__/final-push-100.test.ts
+  ΓùÅ 100% Coverage Tests ΓÇ║ should cover NodeRandomGenerator constructor error path
+
+    ReferenceError: process is not defined
+
+      115 |     expect(() => {
+      116 |       new NodeRandomGenerator();
+    > 117 |     }).toThrow('Node.js crypto module is not available');
+          |        ^
+      118 |
+      119 |     // Restore
+      120 |     (global as any).require = originalRequire;
+
+      at Object.<anonymous> (src/__tests__/final-push-100.test.ts:117:8)
+
+PASS src/__tests__/node-generator.test.ts
+PASS src/__tests__/alea-internal.test.ts
+PASS src/__tests__/create-alea-generator.test.ts
+FAIL src/__tests__/targeted-coverage.test.ts
+  ΓùÅ Specific Uncovered Lines ΓÇ║ Error handling edge cases ΓÇ║ should test constructor with different parameter combinations
+
+    expect(received).toThrow()
+
+    Received function did not throw
+
+       97 |       
+       98 |       // Test with empty object
+    >  99 |       expect(() => new AleaRandomGenerator({})).toThrow();
+          |                                                 ^
+      100 |     });
+      101 |
+      102 |     it('should test fallback environments and error conditions', () => {
+
+      at Object.<anonymous> (src/__tests__/targeted-coverage.test.ts:99:49)
+
+PASS src/__tests__/final-coverage.test.ts
+PASS src/__tests__/alea-generator.test.ts
+PASS src/__tests__/index.test.ts
+FAIL src/__tests__/complete-coverage.test.ts
+  ΓùÅ Complete Coverage Tests ΓÇ║ Index.ts Coverage ΓÇ║ should fall back to Alea when Node crypto throws error
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Object"
+    Received: "NodeRandomGenerator"
+
+      54 |       
+      55 |       // Should have fallen back to Alea
+    > 56 |       expect(Random.constructor.name).toBe('Object'); // Random is an enhanced generator
+         |                                       ^
+      57 |       expect(typeof Random.fraction).toBe('function');
+      58 |     });
+      59 |
+
+      at Object.<anonymous> (src/__tests__/complete-coverage.test.ts:56:39)
+
+  ΓùÅ Complete Coverage Tests ΓÇ║ Index.ts Coverage ΓÇ║ should fall back to Alea when Browser crypto throws error
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Object"
+    Received: "NodeRandomGenerator"
+
+      82 |       
+      83 |       // Should have fallen back to Alea
+    > 84 |       expect(Random.constructor.name).toBe('Object'); // Random is an enhanced generator
+         |                                       ^
+      85 |       expect(typeof Random.fraction).toBe('function');
+      86 |     });
+      87 |
+
+      at Object.<anonymous> (src/__tests__/complete-coverage.test.ts:84:39)
+
+  ΓùÅ Complete Coverage Tests ΓÇ║ Index.ts Coverage ΓÇ║ should use Alea in unknown environment
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Object"
+    Received: "NodeRandomGenerator"
+
+       95 |       
+       96 |       // Should use Alea
+    >  97 |       expect(Random.constructor.name).toBe('Object'); // Random is an enhanced generator
+          |                                       ^
+       98 |       expect(typeof Random.fraction).toBe('function');
+       99 |     });
+      100 |   });
+
+      at Object.<anonymous> (src/__tests__/complete-coverage.test.ts:97:39)
+
+  ΓùÅ Complete Coverage Tests ΓÇ║ Node Generator Coverage ΓÇ║ should throw error when crypto module is not available
+
+    expect(received).toThrow(expected)
+
+    Expected substring: "Node.js crypto module is not available"
+
+    Received function did not throw
+
+      116 |       expect(() => {
+      117 |         new NodeRandomGenerator();
+    > 118 |       }).toThrow('Node.js crypto module is not available');
+          |          ^
+      119 |
+      120 |       // Restore require
+      121 |       (global as any).require = originalRequire;
+
+      at Object.<anonymous> (src/__tests__/complete-coverage.test.ts:118:10)
+
+PASS src/__tests__/node-generator-fallbacks.test.ts
+PASS src/__tests__/index-environment.test.ts
+PASS src/__tests__/browser-generator.test.ts
+--------------------------|---------|----------|---------|---------|-------------------
+File                      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+--------------------------|---------|----------|---------|---------|-------------------
+All files                 |   93.91 |    87.23 |   90.62 |   94.89 |                   
+ abstract-generator.ts    |     100 |      100 |     100 |     100 |                   
+ alea-generator.ts        |   96.29 |      100 |      75 |     100 |                   
+ browser-generator.ts     |     100 |      100 |     100 |     100 |                   
+ create-alea-generator.ts |     100 |      100 |     100 |     100 |                   
+ create-random.ts         |     100 |      100 |     100 |     100 |                   
+ index.ts                 |      80 |    45.45 |   88.88 |      75 | 31,47-56          
+ node-generator.ts        |   94.44 |      100 |     100 |   94.44 | 16                
+--------------------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 3 failed, 9 passed, 12 total
+Tests:       6 failed, 126 passed, 132 total
+Snapshots:   0 total
+Time:        6.194 s
+Ran all test suites.
