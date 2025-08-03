@@ -1,6 +1,6 @@
 {
   "name": "@bluehive-health/random",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Random number generator and utilities with cryptographically strong PRNGs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

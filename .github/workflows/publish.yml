@@ -1,27 +1,46 @@
-name: Publish to GitHub Package Registry
+name: Publish to Package Registries
 
 on:
   release:
     types: [published]
 
 jobs:
-  publish:
+  publish-npmjs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Set up Node.js for npmjs
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          registry-url: 'https://npm.pkg.github.com/'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          registry-url: 'https://registry.npmjs.org/'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Publish package
+      - name: Publish to npmjs
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js for GitHub Package Registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com/'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Publish to GitHub Package Registry
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
