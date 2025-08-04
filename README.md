@@ -6,6 +6,12 @@ A TypeScript npm package for generating random numbers with cryptographically st
 [![TypeScript](https://img.shields.io/badge/TypeScript-ready-blue.svg)](https://www.typescriptlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## 📖 Documentation & Examples
+
+🌐 **[Live Examples & Documentation](https://bluehive-health.github.io/meteor-random/)**
+
+Interactive examples and complete API documentation are available at the link above.
+
 ## Features
 
 - **Cryptographically Strong**: Uses `crypto.randomBytes()` on Node.js and `window.crypto.getRandomValues()` in browsers
@@ -20,6 +26,8 @@ A TypeScript npm package for generating random numbers with cryptographically st
 ```bash
 npm install @bluehive/random
 ```
+
+> 💡 **Try it online!** Check out the [interactive examples and documentation](https://bluehive-health.github.io/meteor-random/) to see the library in action.
 
 ## Usage
 
@@ -219,6 +227,10 @@ If you're migrating from Meteor's `random` package:
 1. Install this package: `npm install @bluehive/random`
 2. Replace imports: `import { Random } from 'meteor/random'` → `import { Random } from '@bluehive/random'`
 3. All existing code should work without changes
+
+## Examples
+
+For interactive examples and live demos, visit: **[https://bluehive-health.github.io/meteor-random/](https://bluehive-health.github.io/meteor-random/)**
 
 ## Development
 

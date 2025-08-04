@@ -2,6 +2,10 @@
 
 This directory contains comprehensive examples demonstrating how to use the `@bluehive/random` library in various environments and scenarios.
 
+## 🌐 Live Demo
+
+**[View Live Examples](https://bluehive-health.github.io/meteor-random/)** - Interactive examples and complete API documentation
+
 ## 📁 Files Overview
 
 ### 🌐 Web Examples

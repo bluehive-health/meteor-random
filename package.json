@@ -30,6 +30,7 @@
     "type": "git",
     "url": "https://github.com/bluehive-health/meteor-random.git"
   },
+  "homepage": "https://bluehive-health.github.io/meteor-random/",
   "files": [
     "dist/**/*",
     "README.md"
