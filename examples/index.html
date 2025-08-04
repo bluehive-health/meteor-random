@@ -70,9 +70,25 @@
                 <p class="mt-6 text-xl sm:text-2xl text-gray-200 max-w-3xl mx-auto">
                     Cryptographically strong random number generation for Node.js and browsers. Ported from Meteor's <a href="https://docs.meteor.com/packages/random.html#random" target="_blank" class="text-blue-300 hover:underline">Random package</a> for full compatibility with modern JavaScript applications.
                 </p>
+                
+                <!-- Badges -->
+                <div class="mt-6 flex flex-wrap gap-2 justify-center">
+                    <img src="https://img.shields.io/npm/v/@bluehive/random?style=flat-square&color=blue" alt="NPM Version" class="h-5">
+                    <img src="https://img.shields.io/npm/dm/@bluehive/random?style=flat-square&color=green" alt="NPM Downloads" class="h-5">
+                    <img src="https://img.shields.io/bundlephobia/minzip/@bluehive/random?style=flat-square&color=orange" alt="Bundle Size" class="h-5">
+                    <img src="https://img.shields.io/github/actions/workflow/status/bluehive-health/meteor-random/test.yml?branch=main&style=flat-square" alt="Build Status" class="h-5">
+                    <img src="https://img.shields.io/npm/l/@bluehive/random?style=flat-square&color=purple" alt="License" class="h-5">
+                    <img src="https://img.shields.io/github/stars/bluehive-health/meteor-random?style=flat-square&color=yellow" alt="GitHub Stars" class="h-5">
+                    <img src="https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript" alt="TypeScript" class="h-5">
+                    <img src="https://img.shields.io/badge/Dependencies-Zero-brightgreen?style=flat-square" alt="Zero Dependencies" class="h-5">
+                </div>
+                
                 <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                    <div class="bg-black/20 backdrop-blur rounded-lg px-4 py-2 text-sm">
+                    <div class="bg-black/20 backdrop-blur rounded-lg px-4 py-2 text-sm flex items-center gap-3 group cursor-pointer" onclick="copyToClipboard('npm install @bluehive/random')" title="Click to copy">
                         <span class="text-gray-300">npm install</span> <span class="text-yellow-300">@bluehive/random</span>
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -101,11 +117,17 @@
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 mb-3">Package Manager</h3>
                         <div class="space-y-3">
-                            <div class="bg-gray-100 rounded-lg p-3">
-                                <code class="text-sm">npm install @bluehive/random</code>
+                            <div class="bg-gray-100 rounded-lg p-3 flex items-center gap-3 group cursor-pointer" onclick="copyToClipboard('npm install @bluehive/random')" title="Click to copy">
+                                <code class="text-sm flex-1">npm install @bluehive/random</code>
+                                <svg class="w-4 h-4 text-gray-500 group-hover:text-gray-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
                             </div>
-                            <div class="bg-gray-100 rounded-lg p-3">
-                                <code class="text-sm">yarn add @bluehive/random</code>
+                            <div class="bg-gray-100 rounded-lg p-3 flex items-center gap-3 group cursor-pointer" onclick="copyToClipboard('yarn add @bluehive/random')" title="Click to copy">
+                                <code class="text-sm flex-1">yarn add @bluehive/random</code>
+                                <svg class="w-4 h-4 text-gray-500 group-hover:text-gray-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
                             </div>
                         </div>
                     </div>
@@ -471,5 +493,58 @@
 
     <script src="./browser.js"></script>
     <script src="./examples.js"></script>
+    <script>
+        // Copy to clipboard functionality
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showCopyFeedback();
+                }).catch(function(err) {
+                    console.error('Failed to copy: ', err);
+                    fallbackCopyTextToClipboard(text);
+                });
+            } else {
+                fallbackCopyTextToClipboard(text);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                var successful = document.execCommand('copy');
+                if (successful) {
+                    showCopyFeedback();
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopyFeedback() {
+            // Create a temporary feedback element
+            const feedback = document.createElement('div');
+            feedback.textContent = 'Copied to clipboard!';
+            feedback.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+            document.body.appendChild(feedback);
+            
+            // Animate in
+            setTimeout(() => {
+                feedback.classList.add('opacity-0', 'translate-y-2');
+            }, 2000);
+            
+            // Remove after animation
+            setTimeout(() => {
+                document.body.removeChild(feedback);
+            }, 2300);
+        }
+    </script>
 </body>
 </html>
