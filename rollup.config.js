@@ -50,6 +50,7 @@ export default [
       typescript({
         module: 'esnext',
         declaration: false, // Already generated in CommonJS build
+        declarationMap: false,
         target: 'ES2018'
       }),
       resolve(),
@@ -77,6 +78,7 @@ export default [
       typescript({
         module: 'esnext',
         declaration: false,
+        declarationMap: false,
         target: 'ES2018',
         lib: ['ES2018', 'DOM']
       }),
@@ -107,6 +109,7 @@ export default [
       typescript({
         module: 'esnext',
         declaration: false,
+        declarationMap: false,
         target: 'ES2018',
         lib: ['ES2018', 'DOM']
       }),
