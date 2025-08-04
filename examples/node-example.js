@@ -1,14 +1,10 @@
 // node-example.js - Example usage of @bluehive/random in Node.js
 
 // Import the library (assuming it's installed via npm)
-// const { Random } = require('@bluehive/random');
+const { Random } = require('@bluehive/random');
 
-// For this example, we'll use a local import since we're in the examples directory
-// In a real project, you would use the npm package
-const path = require('path');
-const fs = require('fs');
-
-// Simple demonstration without actual library import
+// For this example, we'll use the actual library
+// In a real project, you would use: npm install @bluehive/random
 console.log('='.repeat(60));
 console.log('🎲 @bluehive/random - Node.js Example');
 console.log('='.repeat(60));
@@ -22,40 +18,6 @@ console.log("// or");
 console.log("import { Random } from '@bluehive/random';");
 
 console.log('\n🔧 Basic Usage Examples:');
-
-// Mock the Random object for demonstration
-const Random = {
-    id: (length = 17) => {
-        const chars = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
-        let result = '';
-        for (let i = 0; i < length; i++) {
-            result += chars[Math.floor(Math.random() * chars.length)];
-        }
-        return result;
-    },
-    
-    secret: (length = 43) => {
-        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_';
-        let result = '';
-        for (let i = 0; i < length; i++) {
-            result += chars[Math.floor(Math.random() * chars.length)];
-        }
-        return result;
-    },
-    
-    fraction: () => Math.random(),
-    
-    hexString: (digits) => {
-        const chars = '0123456789abcdef';
-        let result = '';
-        for (let i = 0; i < digits; i++) {
-            result += chars[Math.floor(Math.random() * chars.length)];
-        }
-        return result;
-    },
-    
-    choice: (array) => array[Math.floor(Math.random() * array.length)]
-};
 
 // Generate unique identifiers
 console.log('\n1. Generate unique IDs:');

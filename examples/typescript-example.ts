@@ -1,61 +1,7 @@
 // typescript-example.ts - TypeScript example showing type-safe usage
 
 // Import with full TypeScript support
-// import { Random, RandomGenerator } from '@bluehive/random';
-
-// Mock types and implementation for demonstration
-interface RandomGenerator {
-  fraction(): number;
-  hexString(digits: number): string;
-  id(charsCount?: number): string;
-  secret(charsCount?: number): string;
-  choice<T>(arrayOrString: T[]): T | undefined;
-  choice(arrayOrString: string): string;
-  choice<T>(arrayOrString: T[] | string): T | string | undefined;
-  createWithSeeds(...seeds: any[]): RandomGenerator;
-  insecure: RandomGenerator;
-}
-
-// Mock Random object for demonstration
-const Random: RandomGenerator = {
-  id: (charsCount: number = 17): string => {
-    const chars = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
-    return Array.from({ length: charsCount }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  },
-  
-  secret: (charsCount: number = 43): string => {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_';
-    return Array.from({ length: charsCount }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  },
-  
-  fraction: (): number => Math.random(),
-  
-  hexString: (digits: number): string => {
-    const chars = '0123456789abcdef';
-    return Array.from({ length: digits }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  },
-  
-  choice: function<T>(arrayOrString: T[] | string): T | string | undefined {
-    const index = Math.floor(this.fraction() * arrayOrString.length);
-    if (typeof arrayOrString === 'string') {
-      return arrayOrString.charAt(index);
-    }
-    return arrayOrString[index];
-  },
-  
-  createWithSeeds: (...seeds: any[]): RandomGenerator => {
-    // Mock implementation
-    return Random;
-  },
-  
-  insecure: {} as RandomGenerator
-};
-
-// Fill in insecure implementation
-Random.insecure = {
-  ...Random,
-  insecure: {} as RandomGenerator
-};
+import { Random, RandomGenerator } from '@bluehive/random';
 
 // ===== TYPE-SAFE EXAMPLES =====
 

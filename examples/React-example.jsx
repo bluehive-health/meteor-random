@@ -1,24 +1,6 @@
 // React-example.jsx - Example React component using @bluehive/random
 import React, { useState, useEffect } from 'react';
-// import { Random } from '@bluehive/random';
-
-// Mock Random for demonstration
-const Random = {
-  id: (length = 17) => {
-    const chars = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
-    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  },
-  secret: (length = 43) => {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_';
-    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  },
-  fraction: () => Math.random(),
-  hexString: (digits) => {
-    const chars = '0123456789abcdef';
-    return Array.from({ digits }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  },
-  choice: (array) => array[Math.floor(Math.random() * array.length)]
-};
+import { Random } from '@bluehive/random';
 
 // Custom hook for random generation
 function useRandom() {

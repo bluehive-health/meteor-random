@@ -5,12 +5,13 @@
   "private": true,
   "scripts": {
     "serve": "npx serve .",
-    "start": "npx serve . -l 3000",
+    "start": "npm run check-browser-js && npx serve . -l 3000",
+    "check-browser-js": "node -e \"if (!require('fs').existsSync('./browser.js')) { console.error('\\nError: browser.js not found. Please run \\'npm run examples\\' from the root directory.\\n'); process.exit(1); }\"",
     "node-example": "node node-example.js",
     "typescript-example": "npx tsc typescript-example.ts --target es2020 --module commonjs && node typescript-example.js",
     "dev": "npx serve . -l 3000 --cors",
     "build-ts": "npx tsc typescript-example.ts --target es2020 --module commonjs",
-    "clean": "rm -f *.js.map typescript-example.js"
+    "clean": "rm -f *.js.map typescript-example.js browser.js browser.js.map"
   },
   "keywords": [
     "random",

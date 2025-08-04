@@ -111,11 +111,14 @@
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 mb-3">Browser CDN</h3>
-                        <div class="bg-gray-100 rounded-lg p-3">
+                        <div class="bg-gray-100 rounded-lg p-3 mb-2">
                             <code class="text-sm break-all">
-                                &lt;script src="https://unpkg.com/@bluehive/random/dist/index.js"&gt;&lt;/script&gt;
+                                &lt;script src="https://cdn.jsdelivr.net/npm/@bluehive/random@latest/dist/browser.min.js"&gt;&lt;/script&gt;
                             </code>
                         </div>
+                        <p class="text-xs text-gray-600">
+                            This exposes <code class="bg-gray-200 px-1 rounded">window.Random</code> globally. For unminified version, use <code class="bg-gray-200 px-1 rounded">browser.js</code> instead.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -466,8 +469,7 @@
         </div>
     </footer>
 
-    <!-- Include the random library -->
-    <script src="./random-standalone.js"></script>
+    <script src="./browser.js"></script>
     <script src="./examples.js"></script>
 </body>
 </html>

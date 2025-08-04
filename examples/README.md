@@ -11,7 +11,7 @@ This directory contains comprehensive examples demonstrating how to use the `@bl
 ### 🌐 Web Examples
 - **`index.html`** - Interactive web showcase with Tailwind CSS
 - **`examples.js`** - JavaScript functionality for the web demo
-- **`random-standalone.js`** - Standalone browser version of the library
+- **`browser.js`** - Built browser bundle (auto-generated, do not edit)
 
 ### 🖥️ Node.js Examples
 - **`node-example.js`** - Complete Node.js usage examples
@@ -22,7 +22,37 @@ This directory contains comprehensive examples demonstrating how to use the `@bl
 
 ## 🚀 Getting Started
 
-### 1. Interactive Web Demo
+### 1. Run Examples (Recommended)
+
+From the **root directory** of the project, run:
+
+```bash
+# This will build the library, copy files, and start the server
+npm run examples
+```
+
+This command:
+1. Builds the library (`npm run build`)
+2. Copies the browser bundle to the examples directory
+3. Installs example dependencies
+4. Starts a local server at http://localhost:3000
+
+### 2. Manual Setup
+
+If you prefer to run examples manually:
+
+```bash
+# From root directory - build the library first
+npm run build
+npm run examples:copy
+
+# Then from examples directory
+cd examples
+npm install
+npm start
+```
+
+### 3. Interactive Web Demo
 
 Open `index.html` in your browser to see an interactive showcase of all library functions:
 
@@ -87,16 +117,24 @@ function useRandom() {
 
 ## 🔧 Installation
 
-Before running the examples with the actual library:
+The examples now use the actual library from the unpkg CDN or npm:
 
+**For Browser Examples:**
+The `index.html` file automatically loads the library from:
+```html
+<script src="https://unpkg.com/@bluehive/random/dist/index.js"></script>
+```
+
+**For Node.js Examples:**
+Install the library first:
 ```bash
 npm install @bluehive/random
 ```
 
-Then replace the mock implementations in the examples with actual imports:
+Then the examples use the actual library:
 
 ```javascript
-// Replace mock with actual import
+// Actual import - no mock needed
 import { Random } from '@bluehive/random';
 // or
 const { Random } = require('@bluehive/random');
