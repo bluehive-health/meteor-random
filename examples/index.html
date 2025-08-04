@@ -29,17 +29,40 @@
             background: #1f2937;
             color: #f9fafb;
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .syntax-highlight .string { color: #10b981; }
         .syntax-highlight .number { color: #f59e0b; }
         .syntax-highlight .keyword { color: #8b5cf6; }
         .syntax-highlight .comment { color: #6b7280; }
+        
+        /* Mobile responsiveness improvements */
+        @media (max-width: 640px) {
+            .code-output {
+                font-size: 0.75rem;
+                padding: 0.75rem;
+            }
+            pre {
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+        }
+        
+        /* Hide scrollbars but keep functionality */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
     <header class="gradient-bg text-white">
-        <div class="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto px-2 sm:px-4 py-12 sm:px-6 lg:px-8">
             <div class="text-center">
                 <h1 class="text-4xl font-bold sm:text-5xl lg:text-6xl">
                     @bluehive/<span class="text-yellow-300">random</span>
@@ -58,8 +81,8 @@
 
     <!-- Navigation -->
     <nav class="bg-white shadow-sm sticky top-0 z-10">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex space-x-8 overflow-x-auto py-4">
+        <div class="max-w-6xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-2 sm:space-x-4 lg:space-x-8 overflow-x-auto py-4 scrollbar-hide">
                 <a href="#installation" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Installation</a>
                 <a href="#basic-usage" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Basic Usage</a>
                 <a href="#functions" class="text-gray-600 hover:text-blue-600 font-medium whitespace-nowrap">Functions</a>
@@ -69,12 +92,12 @@
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main class="max-w-6xl mx-auto px-2 sm:px-4 py-8 sm:px-6 lg:px-8 overflow-hidden">
         <!-- Installation Section -->
         <section id="installation" class="mb-16">
             <h2 class="text-3xl font-bold text-gray-900 mb-6">Installation</h2>
             <div class="bg-white rounded-lg shadow-md p-6">
-                <div class="grid md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 mb-3">Package Manager</h3>
                         <div class="space-y-3">
@@ -102,7 +125,7 @@
         <section id="basic-usage" class="mb-16">
             <h2 class="text-3xl font-bold text-gray-900 mb-6">Basic Usage</h2>
             <div class="bg-white rounded-lg shadow-md p-6">
-                <div class="grid lg:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 mb-3">Import the Library</h3>
                         <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="keyword">import</span> { <span class="string">Random</span> } <span class="keyword">from</span> <span class="string">'@bluehive/random'</span>;
@@ -142,7 +165,7 @@
                 
                 <!-- Random.id() -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.id()</h3>
                             <p class="text-gray-600 mb-4">Generate a unique identifier that's likely to be unique in the whole world.</p>
@@ -173,7 +196,7 @@
 
                 <!-- Random.secret() -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.secret()</h3>
                             <p class="text-gray-600 mb-4">Generate a cryptographically secure secret with 6 bits of entropy per character.</p>
@@ -204,7 +227,7 @@
 
                 <!-- Random.fraction() -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.fraction()</h3>
                             <p class="text-gray-600 mb-4">Generate a random number between 0 and 1, like Math.random() but cryptographically secure.</p>
@@ -234,7 +257,7 @@
 
                 <!-- Random.hexString() -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.hexString()</h3>
                             <p class="text-gray-600 mb-4">Generate a random string of hexadecimal digits.</p>
@@ -265,7 +288,7 @@
 
                 <!-- Random.choice() -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.choice()</h3>
                             <p class="text-gray-600 mb-4">Randomly select an element from an array or string.</p>
@@ -306,7 +329,7 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Seeded Random Generation</h3>
                     <p class="text-gray-600 mb-4">Create deterministic random generators for testing and reproducible results.</p>
-                    <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
                             <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Create seeded generator</span>
 <span class="keyword">const</span> seeded = Random.<span class="string">createWithSeeds</span>(<span class="string">'seed1'</span>, <span class="string">'seed2'</span>);
@@ -337,7 +360,7 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Fast Non-Cryptographic Generation</h3>
                     <p class="text-gray-600 mb-4">Use the insecure generator for better performance when cryptographic security isn't required.</p>
-                    <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div>
                             <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Use insecure but fast generator</span>
 <span class="keyword">const</span> fastId = Random.insecure.<span class="string">id</span>();
@@ -367,7 +390,7 @@
         <section id="playground" class="mb-16">
             <h2 class="text-3xl font-bold text-gray-900 mb-6">Interactive Playground</h2>
             <div class="bg-white rounded-lg shadow-md p-6">
-                <div class="grid lg:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 mb-3">Custom Function Builder</h3>
                         <div class="space-y-4">
@@ -411,8 +434,8 @@
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8">
+        <div class="max-w-6xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <h3 class="text-lg font-semibold mb-4">@bluehive/random</h3>
                     <p class="text-gray-400 text-sm">
