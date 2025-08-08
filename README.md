@@ -60,6 +60,26 @@ const color = Random.choice(colors); // "green"
 
 // Choose a random character from a string
 const char = Random.choice('abcdef'); // "c"
+
+// Generate a UUID
+const uuid = Random.uuid(); // "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
+// Generate a random date
+const randomDate = Random.date(); // Date within last 100 years
+const dateInRange = Random.date(new Date('2020-01-01'), new Date('2023-12-31'));
+
+// Generate random integers
+const randomInt = Random.integer(); // 0-100
+const intInRange = Random.integer(1, 10); // 1-10
+const cardinal = Random.cardinal(50); // 0-50
+
+// Generate random numbers with decimal precision
+const randomNumber = Random.number(); // 0-1
+const numberInRange = Random.number(1, 100); // 1-100
+const decimal = Random.decimal(2, 10); // 0-10 with 2 decimal places
+
+// Generate number from range [min, max)
+const rangeNumber = Random.fromRange(-5, 5); // -5 to 5 (exclusive)
 ```
 
 ### Seeded Random Generation (Deterministic)
@@ -75,6 +95,8 @@ const seededRandom = Random.createWithSeeds(42);
 // These will always produce the same sequence with seed 42
 console.log(seededRandom.id()); // Always the same result
 console.log(seededRandom.fraction()); // Always the same result
+console.log(seededRandom.uuid()); // Always the same UUID for this seed
+console.log(seededRandom.integer(1, 10)); // Always the same integer
 
 // Multiple seeds can be used
 const multiSeeded = Random.createWithSeeds('test', 123, 'more-entropy');
@@ -91,6 +113,8 @@ import { Random } from '@bluehive/random';
 const fastId = Random.insecure.id();
 const fastFraction = Random.insecure.fraction();
 const fastHex = Random.insecure.hexString(16);
+const fastUuid = Random.insecure.uuid();
+const fastInteger = Random.insecure.integer(1, 100);
 ```
 
 ### Advanced Usage
@@ -149,6 +173,59 @@ Returns a random element from the given array or string.
 
 - `arrayOrString`: Array or string to choose from
 - Returns: Random element from array, or random character from string
+
+### Random.uuid()
+
+Returns a random RFC4122 version 4 UUID.
+
+- Returns: String in UUID format (e.g., "f47ac10b-58cc-4372-a567-0e02b2c3d479")
+
+### Random.date(startDate?, endDate?)
+
+Returns a random date between the given start and end dates.
+
+- `startDate` (optional): Start of date range (default: 100 years ago)
+- `endDate` (optional): End of date range (default: current date)
+- Returns: Random Date object within the specified range
+
+### Random.integer(min?, max?)
+
+Returns a random integer between min and max (inclusive).
+
+- `min` (optional): Minimum value (default: 0)
+- `max` (optional): Maximum value (default: 100 if min not provided, or min if only min provided)
+- Returns: Random integer within the specified range
+
+### Random.cardinal(max?)
+
+Returns a random cardinal (non-negative integer).
+
+- `max` (optional): Maximum value (default: 100)
+- Returns: Random integer between 0 and max (inclusive)
+
+### Random.number(min?, max?)
+
+Returns a random floating point number between min and max.
+
+- `min` (optional): Minimum value (default: 0)
+- `max` (optional): Maximum value (default: 1 if min not provided, or min if only min provided)
+- Returns: Random floating point number within the specified range
+
+### Random.decimal(precision?, max?)
+
+Returns a random decimal number with specified precision.
+
+- `precision` (optional): Number of decimal places (default: 2)
+- `max` (optional): Maximum value (default: 1)
+- Returns: Random decimal number between 0 and max with the given precision
+
+### Random.fromRange(min, max)
+
+Returns a random number within the specified range [min, max).
+
+- `min`: Minimum value (inclusive)
+- `max`: Maximum value (exclusive)
+- Returns: Random number within the range [min, max)
 
 ### Random.createWithSeeds(...seeds)
 
