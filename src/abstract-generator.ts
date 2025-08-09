@@ -47,6 +47,48 @@ export interface RandomGenerator {
   choice<T>(arrayOrString: T[] | string): T | string | undefined;
 
   /**
+   * Return a random RFC4122 version 4 UUID.
+   */
+  uuid(): string;
+
+  /**
+   * Return a random date between the given start and end dates.
+   * If no dates are provided, returns a date within the last 100 years.
+   */
+  date(startDate?: Date, endDate?: Date): Date;
+
+  /**
+   * Return a random integer between min and max (inclusive).
+   * If only one argument is provided, returns integer between 0 and that number.
+   * If no arguments are provided, returns integer between 0 and 100.
+   */
+  integer(min?: number, max?: number): number;
+
+  /**
+   * Return a random cardinal (non-negative integer).
+   * Equivalent to integer(0, max) where max defaults to 100.
+   */
+  cardinal(max?: number): number;
+
+  /**
+   * Return a random floating point number between min and max.
+   * If only one argument is provided, returns number between 0 and that number.
+   * If no arguments are provided, returns number between 0 and 1.
+   */
+  number(min?: number, max?: number): number;
+
+  /**
+   * Return a random decimal number with specified precision.
+   * Returns a number between 0 and max with the given number of decimal places.
+   */
+  decimal(precision?: number, max?: number): number;
+
+  /**
+   * Return a random number within the specified range [min, max).
+   */
+  fromRange(min: number, max: number): number;
+
+  /**
    * Create a non-cryptographically secure PRNG with given seeds (using the Alea algorithm)
    */
   createWithSeeds(...seeds: unknown[]): RandomGenerator;
@@ -123,6 +165,119 @@ export abstract class AbstractRandomGenerator implements RandomGenerator {
       return arrayOrString.substr(index, 1);
     }
     return arrayOrString[index];
+  }
+
+  /**
+   * Return a random RFC4122 version 4 UUID.
+   */
+  uuid(): string {
+    // Generate 16 random bytes
+    const bytes: number[] = [];
+    for (let i = 0; i < 16; i++) {
+      bytes.push(Math.floor(this.fraction() * 256));
+    }
+    
+    // Set version (4) and variant bits according to RFC4122
+    bytes[6] = (bytes[6] & 0x0f) | 0x40; // Version 4
+    bytes[8] = (bytes[8] & 0x3f) | 0x80; // Variant bits
+    
+    // Convert to hex string with hyphens
+    const hex = bytes.map(b => b.toString(16).padStart(2, '0')).join('');
+    return [
+      hex.substring(0, 8),
+      hex.substring(8, 12),
+      hex.substring(12, 16),
+      hex.substring(16, 20),
+      hex.substring(20, 32)
+    ].join('-');
+  }
+
+  /**
+   * Return a random date between the given start and end dates.
+   * If no dates are provided, returns a date within the last 100 years.
+   */
+  date(startDate?: Date, endDate?: Date): Date {
+    const now = new Date();
+    const defaultStart = startDate || new Date(now.getFullYear() - 100, 0, 1);
+    const defaultEnd = endDate || now;
+    
+    const startTime = defaultStart.getTime();
+    const endTime = defaultEnd.getTime();
+    const randomTime = startTime + this.fraction() * (endTime - startTime);
+    
+    return new Date(randomTime);
+  }
+
+  /**
+   * Return a random integer between min and max (inclusive).
+   * If only one argument is provided, returns integer between 0 and that number.
+   * If no arguments are provided, returns integer between 0 and 100.
+   */
+  integer(min?: number, max?: number): number {
+    let actualMin: number;
+    let actualMax: number;
+    
+    if (min === undefined && max === undefined) {
+      actualMin = 0;
+      actualMax = 100;
+    } else if (max === undefined) {
+      actualMin = 0;
+      actualMax = min!;
+    } else {
+      actualMin = min!;
+      actualMax = max;
+    }
+    
+    return Math.floor(this.fraction() * (actualMax - actualMin + 1)) + actualMin;
+  }
+
+  /**
+   * Return a random cardinal (non-negative integer).
+   * Equivalent to integer(0, max) where max defaults to 100.
+   */
+  cardinal(max?: number): number {
+    return this.integer(0, max ?? 100);
+  }
+
+  /**
+   * Return a random floating point number between min and max.
+   * If only one argument is provided, returns number between 0 and that number.
+   * If no arguments are provided, returns number between 0 and 1.
+   */
+  number(min?: number, max?: number): number {
+    let actualMin: number;
+    let actualMax: number;
+    
+    if (min === undefined && max === undefined) {
+      return this.fraction();
+    } else if (max === undefined) {
+      actualMin = 0;
+      actualMax = min!;
+    } else {
+      actualMin = min!;
+      actualMax = max;
+    }
+    
+    return actualMin + this.fraction() * (actualMax - actualMin);
+  }
+
+  /**
+   * Return a random decimal number with specified precision.
+   * Returns a number between 0 and max with the given number of decimal places.
+   */
+  decimal(precision?: number, max?: number): number {
+    const actualPrecision = precision ?? 2;
+    const actualMax = max ?? 1;
+    const factor = Math.pow(10, actualPrecision);
+    const randomValue = this.fraction() * actualMax;
+    return Math.round(randomValue * factor) / factor;
+  }
+
+  /**
+   * Return a random number within the specified range [min, max).
+   */
+  fromRange(min: number, max: number): number {
+    return min + this.fraction() * (max - min);
   }
 
   /**
