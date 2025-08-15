@@ -19,4 +19,22 @@ export class BrowserRandomGenerator extends AbstractRandomGenerator {
     window.crypto.getRandomValues(array);
     return array[0] * 2.3283064365386963e-10; // 2^-32
   }
+
+  /**
+   * Return a random RFC4122 version 4 UUID.
+   * Uses crypto.randomUUID() when available for optimal performance
+   */
+  uuid(): string {
+    // Check if we're in a browser environment and crypto is available
+    if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
+      try {
+        return window.crypto.randomUUID();
+      } catch {
+        // Fall back to manual implementation if native UUID fails
+      }
+    }
+    
+    // Fall back to parent implementation
+    return super.uuid();
+  }
 }

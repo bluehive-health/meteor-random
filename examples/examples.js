@@ -33,6 +33,98 @@ const Random = {
         return arrayOrString[index];
     },
     
+    uuid: function() {
+        // Use native crypto.randomUUID() when available for optimal performance
+        if (typeof crypto !== 'undefined' && crypto.randomUUID && typeof crypto.randomUUID === 'function') {
+            try {
+                return crypto.randomUUID();
+            } catch {
+                // Fall back to manual implementation if native UUID fails
+            }
+        }
+        
+        // Generate 16 random bytes
+        const bytes = [];
+        for (let i = 0; i < 16; i++) {
+            bytes.push(Math.floor(this.fraction() * 256));
+        }
+        
+        // Set version (4) and variant bits according to RFC4122
+        bytes[6] = (bytes[6] & 0x0f) | 0x40; // Version 4
+        bytes[8] = (bytes[8] & 0x3f) | 0x80; // Variant bits
+        
+        // Convert to hex string with hyphens
+        const hex = bytes.map(b => b.toString(16).padStart(2, '0')).join('');
+        return [
+            hex.substring(0, 8),
+            hex.substring(8, 12),
+            hex.substring(12, 16),
+            hex.substring(16, 20),
+            hex.substring(20, 32)
+        ].join('-');
+    },
+    
+    date: function(startDate, endDate) {
+        const now = new Date();
+        const defaultStart = startDate || new Date(now.getFullYear() - 100, 0, 1);
+        const defaultEnd = endDate || now;
+        
+        const startTime = defaultStart.getTime();
+        const endTime = defaultEnd.getTime();
+        const randomTime = startTime + this.fraction() * (endTime - startTime);
+        
+        return new Date(randomTime);
+    },
+    
+    integer: function(min, max) {
+        let actualMin, actualMax;
+        
+        if (min === undefined && max === undefined) {
+            actualMin = 0;
+            actualMax = 100;
+        } else if (max === undefined) {
+            actualMin = 0;
+            actualMax = min;
+        } else {
+            actualMin = min;
+            actualMax = max;
+        }
+        
+        return Math.floor(this.fraction() * (actualMax - actualMin + 1)) + actualMin;
+    },
+    
+    cardinal: function(max) {
+        return this.integer(0, max !== undefined ? max : 100);
+    },
+    
+    number: function(min, max) {
+        let actualMin, actualMax;
+        
+        if (min === undefined && max === undefined) {
+            return this.fraction();
+        } else if (max === undefined) {
+            actualMin = 0;
+            actualMax = min;
+        } else {
+            actualMin = min;
+            actualMax = max;
+        }
+        
+        return actualMin + this.fraction() * (actualMax - actualMin);
+    },
+    
+    decimal: function(precision, max) {
+        const actualPrecision = precision !== undefined ? precision : 2;
+        const actualMax = max !== undefined ? max : 1;
+        const factor = Math.pow(10, actualPrecision);
+        const randomValue = this.fraction() * actualMax;
+        return Math.round(randomValue * factor) / factor;
+    },
+    
+    fromRange: function(min, max) {
+        return min + this.fraction() * (max - min);
+    },
+    
     createWithSeeds: function(...seeds) {
         // Simple seeded random using a hash of the seeds
         let seed = 0;
@@ -46,30 +138,123 @@ const Random = {
         // Simple LCG implementation for deterministic results
         let current = Math.abs(seed);
         
+        // Helper function for seeded fraction
+        const seededFraction = () => {
+            current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
+            return current / Math.pow(2, 32);
+        };
+        
+        // Helper function for seeded random string
+        const seededRandomString = (length, alphabet) => {
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += alphabet.charAt(Math.floor(seededFraction() * alphabet.length));
+            }
+            return result;
+        };
+        
         return {
             id: (length = 17) => {
                 const chars = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
-                return this._seededRandomString(current, length, chars);
+                return seededRandomString(length, chars);
             },
             
             secret: (length = 43) => {
                 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_';
-                return this._seededRandomString(current, length, chars);
+                return seededRandomString(length, chars);
             },
             
-            fraction: () => {
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                return current / Math.pow(2, 32);
-            },
+            fraction: seededFraction,
             
             hexString: (digits) => {
                 const chars = '0123456789abcdef';
-                return this._seededRandomString(current, digits, chars);
+                return seededRandomString(digits, chars);
+            },
+            
+            uuid: () => {
+                // Generate 16 random bytes using seeded random
+                const bytes = [];
+                for (let i = 0; i < 16; i++) {
+                    bytes.push(Math.floor(seededFraction() * 256));
+                }
+                
+                // Set version (4) and variant bits according to RFC4122
+                bytes[6] = (bytes[6] & 0x0f) | 0x40; // Version 4
+                bytes[8] = (bytes[8] & 0x3f) | 0x80; // Variant bits
+                
+                // Convert to hex string with hyphens
+                const hex = bytes.map(b => b.toString(16).padStart(2, '0')).join('');
+                return [
+                    hex.substring(0, 8),
+                    hex.substring(8, 12),
+                    hex.substring(12, 16),
+                    hex.substring(16, 20),
+                    hex.substring(20, 32)
+                ].join('-');
+            },
+            
+            date: (startDate, endDate) => {
+                const now = new Date();
+                const defaultStart = startDate || new Date(now.getFullYear() - 100, 0, 1);
+                const defaultEnd = endDate || now;
+                
+                const startTime = defaultStart.getTime();
+                const endTime = defaultEnd.getTime();
+                const randomTime = startTime + seededFraction() * (endTime - startTime);
+                
+                return new Date(randomTime);
+            },
+            
+            integer: (min, max) => {
+                let actualMin, actualMax;
+                
+                if (min === undefined && max === undefined) {
+                    actualMin = 0;
+                    actualMax = 100;
+                } else if (max === undefined) {
+                    actualMin = 0;
+                    actualMax = min;
+                } else {
+                    actualMin = min;
+                    actualMax = max;
+                }
+                
+                return Math.floor(seededFraction() * (actualMax - actualMin + 1)) + actualMin;
+            },
+            
+            cardinal: (max = 100) => {
+                return Math.floor(seededFraction() * (max + 1));
+            },
+            
+            number: (min, max) => {
+                let actualMin, actualMax;
+                
+                if (min === undefined && max === undefined) {
+                    return seededFraction();
+                } else if (max === undefined) {
+                    actualMin = 0;
+                    actualMax = min;
+                } else {
+                    actualMin = min;
+                    actualMax = max;
+                }
+                
+                return actualMin + seededFraction() * (actualMax - actualMin);
+            },
+            
+            decimal: (precision = 2, max = 1) => {
+                const factor = Math.pow(10, precision);
+                const randomValue = seededFraction() * max;
+                return Math.round(randomValue * factor) / factor;
+            },
+            
+            fromRange: (min, max) => {
+                return min + seededFraction() * (max - min);
             }
         };
     },
     
-    insecure: {
+        insecure: {
         id: function(length = 17) {
             const chars = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
             return Random._randomString(length, chars);
@@ -87,6 +272,34 @@ const Random = {
         hexString: function(digits) {
             const chars = '0123456789abcdef';
             return Random._randomString(digits, chars);
+        },
+        
+        uuid: function() {
+            return Random.uuid();
+        },
+        
+        date: function(startDate, endDate) {
+            return Random.date(startDate, endDate);
+        },
+        
+        integer: function(min, max) {
+            return Random.integer(min, max);
+        },
+        
+        cardinal: function(max) {
+            return Random.cardinal(max);
+        },
+        
+        number: function(min, max) {
+            return Random.number(min, max);
+        },
+        
+        decimal: function(precision, max) {
+            return Random.decimal(precision, max);
+        },
+        
+        fromRange: function(min, max) {
+            return Random.fromRange(min, max);
         }
     },
     
@@ -242,6 +455,34 @@ function executeCustomFunction() {
             result = Random.fraction().toFixed(10);
             code = `Random.fraction()`;
             break;
+        case 'uuid':
+            result = Random.uuid();
+            code = `Random.uuid()`;
+            break;
+        case 'date':
+            result = Random.date().toISOString();
+            code = `Random.date()`;
+            break;
+        case 'integer':
+            result = Random.integer(1, length);
+            code = `Random.integer(1, ${length})`;
+            break;
+        case 'cardinal':
+            result = Random.cardinal(length);
+            code = `Random.cardinal(${length})`;
+            break;
+        case 'number':
+            result = Random.number(0, length).toFixed(4);
+            code = `Random.number(0, ${length})`;
+            break;
+        case 'decimal':
+            result = Random.decimal(2, length);
+            code = `Random.decimal(2, ${length})`;
+            break;
+        case 'fromRange':
+            result = Random.fromRange(1, length).toFixed(4);
+            code = `Random.fromRange(1, ${length})`;
+            break;
         default:
             result = 'Unknown function';
             code = 'Unknown function';
@@ -249,6 +490,74 @@ function executeCustomFunction() {
     
     document.getElementById('generated-code').textContent = code;
     document.getElementById('custom-output').innerHTML = `<code class="text-purple-600 break-all">${result}</code>`;
+}
+
+// New function examples
+function generateUuid() {
+    const result = Random.uuid();
+    document.getElementById('uuid-output').innerHTML = `<code class="font-mono text-blue-600">${result}</code>`;
+}
+
+function generateDate() {
+    const result = Random.date();
+    document.getElementById('date-output').innerHTML = `<code class="font-mono text-green-600">${result.toLocaleDateString()}</code>`;
+}
+
+function generateDateRange() {
+    const start = new Date('2020-01-01');
+    const end = new Date('2023-12-31');
+    const result = Random.date(start, end);
+    document.getElementById('date-output').innerHTML = `<code class="font-mono text-teal-600">${result.toLocaleDateString()} <span class="text-gray-500">(2020-2023)</span></code>`;
+}
+
+function generateInteger() {
+    const result = Random.integer();
+    document.getElementById('integer-output').innerHTML = `<code class="font-mono text-orange-600">${result}</code>`;
+}
+
+function generateIntegerRange() {
+    const result = Random.integer(1, 100);
+    document.getElementById('integer-output').innerHTML = `<code class="font-mono text-red-600">${result} <span class="text-gray-500">(1-100)</span></code>`;
+}
+
+function generateCardinal() {
+    const result = Random.cardinal();
+    document.getElementById('cardinal-output').innerHTML = `<code class="font-mono text-purple-600">${result}</code>`;
+}
+
+function generateCardinalMax() {
+    const result = Random.cardinal(50);
+    document.getElementById('cardinal-output').innerHTML = `<code class="font-mono text-pink-600">${result} <span class="text-gray-500">(0-50)</span></code>`;
+}
+
+function generateNumber() {
+    const result = Random.number();
+    document.getElementById('number-output').innerHTML = `<code class="font-mono text-indigo-600">${result.toFixed(6)}</code>`;
+}
+
+function generateNumberRange() {
+    const result = Random.number(1, 10);
+    document.getElementById('number-output').innerHTML = `<code class="font-mono text-blue-600">${result.toFixed(4)} <span class="text-gray-500">(1-10)</span></code>`;
+}
+
+function generateDecimal() {
+    const result = Random.decimal();
+    document.getElementById('decimal-output').innerHTML = `<code class="font-mono text-green-600">${result}</code>`;
+}
+
+function generateDecimalPrecision() {
+    const result = Random.decimal(4, 100);
+    document.getElementById('decimal-output').innerHTML = `<code class="font-mono text-teal-600">${result} <span class="text-gray-500">(4 decimal places, max 100)</span></code>`;
+}
+
+function generateFromRange() {
+    const result = Random.fromRange(0, 1);
+    document.getElementById('fromRange-output').innerHTML = `<code class="font-mono text-orange-600">${result.toFixed(6)}</code>`;
+}
+
+function generateFromRangeCustom() {
+    const result = Random.fromRange(-50, 50);
+    document.getElementById('fromRange-output').innerHTML = `<code class="font-mono text-red-600">${result.toFixed(4)} <span class="text-gray-500">(-50 to 50)</span></code>`;
 }
 
 // Update parameter section based on selected function
@@ -261,6 +570,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedFunction = this.value;
         
         if (selectedFunction === 'fraction') {
+            parameterSection.style.display = 'none';
+        } else if (selectedFunction === 'uuid' || selectedFunction === 'date') {
             parameterSection.style.display = 'none';
         } else {
             parameterSection.style.display = 'block';
@@ -275,6 +586,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
                 case 'hexString':
                     lengthInput.value = 8;
+                    break;
+                case 'integer':
+                case 'cardinal':
+                case 'number':
+                case 'decimal':
+                case 'fromRange':
+                    lengthInput.value = 10;
                     break;
             }
         }

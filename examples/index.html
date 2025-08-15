@@ -424,6 +424,155 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Random.uuid() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.uuid()</h3>
+                            <p class="text-gray-600 mb-4">Generate RFC4122 version 4 UUIDs for unique identifiers.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Generate a UUID</span>
+<span class="keyword">const</span> id = Random.<span class="string">uuid</span>();
+<span class="comment">// → "f47ac10b-58cc-4372-a567-0e02b2c3d479"</span></code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateUuid()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Generate UUID
+                                </button>
+                                <div id="uuid-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center">
+                                    <span class="text-gray-500 text-sm">Click to generate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Random.date() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.date()</h3>
+                            <p class="text-gray-600 mb-4">Generate random dates within specified ranges.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Random date (last 100 years)</span>
+<span class="keyword">const</span> date1 = Random.<span class="string">date</span>();
+
+<span class="comment">// Random date in range</span>
+<span class="keyword">const</span> start = <span class="keyword">new</span> Date(<span class="string">'2020-01-01'</span>);
+<span class="keyword">const</span> end = <span class="keyword">new</span> Date(<span class="string">'2023-12-31'</span>);
+<span class="keyword">const</span> date2 = Random.<span class="string">date</span>(start, end);</code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateDate()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Random Date
+                                </button>
+                                <button onclick="generateDateRange()" class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Date in Range (2020-2023)
+                                </button>
+                                <div id="date-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center">
+                                    <span class="text-gray-500 text-sm">Click to generate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Random.integer() and Random.cardinal() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Random.integer() & Random.cardinal()</h3>
+                            <p class="text-gray-600 mb-4">Generate random integers and non-negative integers (cardinals).</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Random integer (0-100)</span>
+<span class="keyword">const</span> int1 = Random.<span class="string">integer</span>();
+
+<span class="comment">// Random integer in range</span>
+<span class="keyword">const</span> int2 = Random.<span class="string">integer</span>(<span class="number">1</span>, <span class="number">10</span>);
+
+<span class="comment">// Random cardinal (0-100)</span>
+<span class="keyword">const</span> cardinal = Random.<span class="string">cardinal</span>(<span class="number">50</span>);</code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateInteger()" class="w-full bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Random Integer
+                                </button>
+                                <button onclick="generateIntegerRange()" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Integer (1-100)
+                                </button>
+                                <div id="integer-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center mb-3">
+                                    <span class="text-gray-500 text-sm">Click to generate</span>
+                                </div>
+                                <button onclick="generateCardinal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Random Cardinal
+                                </button>
+                                <button onclick="generateCardinalMax()" class="w-full bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Cardinal (0-50)
+                                </button>
+                                <div id="cardinal-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center">
+                                    <span class="text-gray-500 text-sm">Click to generate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Random.number(), Random.decimal(), Random.fromRange() -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Number Functions</h3>
+                            <p class="text-gray-600 mb-4">Generate floating point numbers with various constraints.</p>
+                            <pre class="code-output rounded-lg p-4 text-sm overflow-x-auto"><code class="syntax-highlight"><span class="comment">// Random number (0-1)</span>
+<span class="keyword">const</span> num1 = Random.<span class="string">number</span>();
+
+<span class="comment">// Random number in range</span>
+<span class="keyword">const</span> num2 = Random.<span class="string">number</span>(<span class="number">1</span>, <span class="number">10</span>);
+
+<span class="comment">// Random decimal with precision</span>
+<span class="keyword">const</span> dec = Random.<span class="string">decimal</span>(<span class="number">4</span>, <span class="number">100</span>);
+
+<span class="comment">// Random from range [min, max)</span>
+<span class="keyword">const</span> range = Random.<span class="string">fromRange</span>(<span class="number">-50</span>, <span class="number">50</span>);</code></pre>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Try it:</h4>
+                            <div class="space-y-3">
+                                <button onclick="generateNumber()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Random Number
+                                </button>
+                                <button onclick="generateNumberRange()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Number (1-10)
+                                </button>
+                                <div id="number-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center mb-3">
+                                    <span class="text-gray-500 text-sm">Click to generate</span>
+                                </div>
+                                <button onclick="generateDecimal()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Random Decimal
+                                </button>
+                                <button onclick="generateDecimalPrecision()" class="w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    Decimal (4 places, max 100)
+                                </button>
+                                <div id="decimal-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center mb-3">
+                                    <span class="text-gray-500 text-sm">Click to generate</span>
+                                </div>
+                                <button onclick="generateFromRange()" class="w-full bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    From Range (0-1)
+                                </button>
+                                <button onclick="generateFromRangeCustom()" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                                    From Range (-50 to 50)
+                                </button>
+                                <div id="fromRange-output" class="bg-gray-100 rounded-lg p-3 min-h-[2.5rem] flex items-center">
+                                    <span class="text-gray-500 text-sm">Click to generate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -442,6 +591,13 @@
                                     <option value="secret">Random.secret()</option>
                                     <option value="hexString">Random.hexString()</option>
                                     <option value="fraction">Random.fraction()</option>
+                                    <option value="uuid">Random.uuid()</option>
+                                    <option value="date">Random.date()</option>
+                                    <option value="integer">Random.integer()</option>
+                                    <option value="cardinal">Random.cardinal()</option>
+                                    <option value="number">Random.number()</option>
+                                    <option value="decimal">Random.decimal()</option>
+                                    <option value="fromRange">Random.fromRange()</option>
                                 </select>
                             </div>
                             <div id="parameter-section">
