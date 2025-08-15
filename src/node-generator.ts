@@ -58,4 +58,22 @@ export class NodeRandomGenerator extends AbstractRandomGenerator {
     // of randomness, so we need to trim the last digit.
     return result.substring(0, digits);
   }
+
+  /**
+   * Return a random RFC4122 version 4 UUID.
+   * Uses crypto.randomUUID() when available (Node.js 15.6.0+) for optimal performance
+   */
+  uuid(): string {
+    // Use native crypto.randomUUID() if available (Node.js 15.6.0+)
+    if (this.crypto.randomUUID && typeof this.crypto.randomUUID === 'function') {
+      try {
+        return this.crypto.randomUUID();
+      } catch {
+        // Fall back to manual implementation if native UUID fails
+      }
+    }
+    
+    // Fall back to parent implementation
+    return super.uuid();
+  }
 }

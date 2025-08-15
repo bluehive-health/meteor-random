@@ -34,6 +34,15 @@ const Random = {
     },
     
     uuid: function() {
+        // Use native crypto.randomUUID() when available for optimal performance
+        if (typeof crypto !== 'undefined' && crypto.randomUUID && typeof crypto.randomUUID === 'function') {
+            try {
+                return crypto.randomUUID();
+            } catch {
+                // Fall back to manual implementation if native UUID fails
+            }
+        }
+        
         // Generate 16 random bytes
         const bytes = [];
         for (let i = 0; i < 16; i++) {
@@ -129,33 +138,44 @@ const Random = {
         // Simple LCG implementation for deterministic results
         let current = Math.abs(seed);
         
+        // Helper function for seeded fraction
+        const seededFraction = () => {
+            current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
+            return current / Math.pow(2, 32);
+        };
+        
+        // Helper function for seeded random string
+        const seededRandomString = (length, alphabet) => {
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += alphabet.charAt(Math.floor(seededFraction() * alphabet.length));
+            }
+            return result;
+        };
+        
         return {
             id: (length = 17) => {
                 const chars = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
-                return this._seededRandomString(current, length, chars);
+                return seededRandomString(length, chars);
             },
             
             secret: (length = 43) => {
                 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_';
-                return this._seededRandomString(current, length, chars);
+                return seededRandomString(length, chars);
             },
             
-            fraction: () => {
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                return current / Math.pow(2, 32);
-            },
+            fraction: seededFraction,
             
             hexString: (digits) => {
                 const chars = '0123456789abcdef';
-                return this._seededRandomString(current, digits, chars);
+                return seededRandomString(digits, chars);
             },
             
             uuid: () => {
                 // Generate 16 random bytes using seeded random
                 const bytes = [];
                 for (let i = 0; i < 16; i++) {
-                    current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                    bytes.push(Math.floor((current / Math.pow(2, 32)) * 256));
+                    bytes.push(Math.floor(seededFraction() * 256));
                 }
                 
                 // Set version (4) and variant bits according to RFC4122
@@ -180,8 +200,7 @@ const Random = {
                 
                 const startTime = defaultStart.getTime();
                 const endTime = defaultEnd.getTime();
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                const randomTime = startTime + (current / Math.pow(2, 32)) * (endTime - startTime);
+                const randomTime = startTime + seededFraction() * (endTime - startTime);
                 
                 return new Date(randomTime);
             },
@@ -200,22 +219,18 @@ const Random = {
                     actualMax = max;
                 }
                 
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                return Math.floor((current / Math.pow(2, 32)) * (actualMax - actualMin + 1)) + actualMin;
+                return Math.floor(seededFraction() * (actualMax - actualMin + 1)) + actualMin;
             },
             
-            cardinal: (max) => {
-                const actualMax = max !== undefined ? max : 100;
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                return Math.floor((current / Math.pow(2, 32)) * (actualMax + 1));
+            cardinal: (max = 100) => {
+                return Math.floor(seededFraction() * (max + 1));
             },
             
             number: (min, max) => {
                 let actualMin, actualMax;
                 
                 if (min === undefined && max === undefined) {
-                    current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                    return current / Math.pow(2, 32);
+                    return seededFraction();
                 } else if (max === undefined) {
                     actualMin = 0;
                     actualMax = min;
@@ -224,22 +239,17 @@ const Random = {
                     actualMax = max;
                 }
                 
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                return actualMin + (current / Math.pow(2, 32)) * (actualMax - actualMin);
+                return actualMin + seededFraction() * (actualMax - actualMin);
             },
             
-            decimal: (precision, max) => {
-                const actualPrecision = precision !== undefined ? precision : 2;
-                const actualMax = max !== undefined ? max : 1;
-                const factor = Math.pow(10, actualPrecision);
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                const randomValue = (current / Math.pow(2, 32)) * actualMax;
+            decimal: (precision = 2, max = 1) => {
+                const factor = Math.pow(10, precision);
+                const randomValue = seededFraction() * max;
                 return Math.round(randomValue * factor) / factor;
             },
             
             fromRange: (min, max) => {
-                current = (current * 1664525 + 1013904223) % Math.pow(2, 32);
-                return min + (current / Math.pow(2, 32)) * (max - min);
+                return min + seededFraction() * (max - min);
             }
         };
     },
